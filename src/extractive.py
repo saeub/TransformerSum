@@ -13,7 +13,7 @@ import numpy as np
 import pytorch_lightning as pl
 import torch
 from rouge_score import rouge_scorer, scoring
-from spacy.lang.en import English
+from spacy.lang.de import German
 from torch import nn
 from torch.utils.data import DataLoader
 from transformers import AutoConfig, AutoModel, AutoTokenizer
@@ -1096,7 +1096,7 @@ class ExtractiveSummarizer(pl.LightningModule):
                 for sentence in input_sentences
             ]
         else:
-            nlp = English()
+            nlp = German()
             sentencizer = nlp.create_pipe("sentencizer")
             nlp.add_pipe(sentencizer)
 
@@ -1172,7 +1172,7 @@ class ExtractiveSummarizer(pl.LightningModule):
             str: The summary text. If ``raw_scores`` is set then returns a list
             of input sentences and their corespoding scores.
         """
-        nlp = English()
+        nlp = German()
         nlp.add_pipe("sentencizer")
         doc = nlp(input_text)
 

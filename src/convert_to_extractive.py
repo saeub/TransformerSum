@@ -14,7 +14,7 @@ from multiprocessing import Pool
 from time import time
 
 import spacy
-from spacy.lang.en import English
+from spacy.lang.de import German
 from tqdm import tqdm
 
 import datasets as hf_nlp
@@ -78,15 +78,14 @@ def convert_to_extractive_driver(args):
     if not args.base_output_path:
         args.base_output_path = args.base_path
 
-    # load spacy english small model with the "tagger" and "ner" disabled since
+    # load spacy german small model with the "tagger" and "ner" disabled since
     # we only need the "tokenizer" and "parser"
     # more info: https://spacy.io/usage/processing-pipelines
     if args.sentencizer:
-        nlp = English()
-        sentencizer = nlp.create_pipe("sentencizer")
-        nlp.add_pipe(sentencizer)
+        nlp = German()
+        nlp.add_pipe("sentencizer")
     else:
-        nlp = spacy.load("en_core_web_sm", disable=["tagger", "ner"])
+        nlp = spacy.load("de_core_web_sm", disable=["tagger", "ner"])
 
     if args.dataset:
         dataset = hf_nlp.load_dataset(args.dataset, args.dataset_version)
